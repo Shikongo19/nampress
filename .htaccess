@@ -1,4 +1,3 @@
-
 RewriteEngine On
 RewriteBase /
 
@@ -20,7 +19,3 @@ AddDefaultCharset UTF-8
 order allow,deny
 deny from all
 </Files>
-
-# Optionally, force HTTPS
-# RewriteCond %{HTTPS} off
-# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
