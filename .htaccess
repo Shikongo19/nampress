@@ -1,0 +1,26 @@
+
+RewriteEngine On
+RewriteBase /
+
+# If the request is not for a valid file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite all requests to index.php
+RewriteRule ^ index.php [QSA,L]
+
+# Disable directory browsing
+Options -Indexes
+
+# Set the default character set
+AddDefaultCharset UTF-8
+
+# Prevent access to .htaccess
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+# Optionally, force HTTPS
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

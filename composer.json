@@ -1,0 +1,15 @@
+{
+    "name": "shiko/nampress",
+    "autoload": {
+        "psr-4": {
+            "Shiko\\Nampress\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Giideon Victory",
+            "email": "76754486+Shikongo19@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
