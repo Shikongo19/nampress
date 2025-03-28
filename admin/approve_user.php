@@ -1,32 +1,27 @@
 <?php
-session_start();
-if (!isset($_SESSION['admin'])) {
-    header('Location: ../login.php');
-    exit();
-}
+    require_once __DIR__ . '/../includes/functions.php'; // Include the shared functions file
+    require_once __DIR__ . '/../db/conn.php'; // Include the database connection file
 
-$user_id = $_GET['id'];
+    session_start();
+    if (!isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'admin' ) {
+        header('Location: ../login.php');
+        exit();
+    }
 
-// Database connection
-$conn = new mysqli('localhost', 'root', '', 'your_database');
+    // Approve the user
+    if (isset($_GET['id'])) {
+        $userId = intval($_GET['id']); // Get the user ID from the query string
+    
+        if (approveUser($userId)) {
+            echo "User approved successfully!";
+            header('Location: index.php'); // Redirect back to the admin dashboard
+            exit();
+        } else {
+            echo "Failed to approve user.";
+        }
+    } else {
+        echo "No user ID provided.";
+    }
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Approve the user
-$sql = "UPDATE users SET approved = 1 WHERE id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $user_id);
-
-if ($stmt->execute()) {
-    echo "User approved successfully.";
-} else {
-    echo "Error approving user: " . $conn->error;
-}
-
-$stmt->close();
-$conn->close();
-
-header('Location: index.php'); // Redirect back to admin portal
+    header('Location: index.php'); // Redirect back to admin portal
 ?>

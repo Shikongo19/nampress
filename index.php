@@ -4,58 +4,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 session_start();
-require_once __DIR__ . '/db/conn.php';
-
-// Define global variables
-global $companies, $countries, $Id, $option, $request, $basePath, $users, $user, $conn;
-
-
-function getConn() {
-    global $con;
-    $con = $conn;
-    return $con;
-}
-
-// Function to fetch all records from a table
-function getAllUser($table) {
-    global $conn;
-    try {
-        $stmt = $conn->prepare("SELECT * FROM $table");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        error_log("Database error: " . $e->getMessage());
-        return [];
-    }
-}
-
-// Function to fetch products by company ID
-function getProductsByCompany($companyID) {
-    global $conn;
-    try {
-        $stmt = $conn->prepare("SELECT * FROM products WHERE company_id = :company_id");
-        $stmt->bindParam(':company_id', $companyID, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        error_log("Database error: " . $e->getMessage());
-        return [];
-    }
-}
-
-// Function to fetch products by company ID
-function getUserById($table, $Id) {
-    global $conn;
-    try {
-        $stmt = $conn->prepare("SELECT * FROM $table WHERE email = :id");
-        $stmt->bindParam(':email', $Id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        error_log("Database error: " . $e->getMessage());
-        return [];
-    }
-}
 
 
 // Generate and store CSRF token if it doesn't exist
